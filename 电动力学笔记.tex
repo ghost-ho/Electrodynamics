@@ -1,0 +1,157 @@
+\documentclass[12pt,a4paper]{ctexart}
+
+\usepackage{ctex,amssymb,amsthm,amsmath,amsfonts,amsrefs,geometry,graphicx,physconst,indentfirst,circuitikz,tikz}
+\usepackage{txfonts}
+\geometry{scale=0.8}
+\graphicspath{{figure}}
+
+\title{\Huge 《电动力学》}
+\author{\Huge 二次元物理}%
+% \date{\today}
+
+\newtheorem{theorem}{\indent 定理}[section]
+\newtheorem{lemma}[theorem]{\indent 引理}
+\newtheorem{proposition}[theorem]{\indent 命题}
+\newtheorem{corollary}[theorem]{\indent 推论}
+\newtheorem{definition}{\indent 定义}[section]
+\newtheorem{example}{\indent 例}[section]
+\newtheorem{remark}{\indent 注:}[section]
+\newenvironment{solution}{\begin{proof}[\indent\bf 解:]}{\end{proof}}
+\renewcommand{\proofname}{\indent\bf 证:}
+
+\renewcommand*{\bf}[1]{\boldsymbol{#1}}
+\newcommand*{\hatbf}[1]{\hat{\bf{#1}}}
+\newcommand*{\grad}{\textbf{\rm{grad}}}
+\renewcommand*{\div}{\textbf{\rm{div}}}
+\newcommand*{\rot}{\textbf{\rm{rot}}}
+\renewcommand*{\d}{\mathrm{d}}
+
+
+\numberwithin{equation}{section}
+
+\DeclareSymbolFont{EulerExtension}{U}{euex}{m}{n}
+\DeclareMathSymbol{\euintop}{\mathop} {EulerExtension}{"52}
+\DeclareMathSymbol{\euointop}{\mathop} {EulerExtension}{"48}
+\let\intop\euintop
+\let\ointop\euointop
+
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\newpage
+
+    \part{矢量分析}
+        \section{标量场、矢量场}
+        \textbf{场}描述了物理量在时空中的分布情况。如果场与时间无关，则称这样的场为\textbf{稳恒场}；反之则称为\textbf{时变场}。\\
+        \textbf{场函数}一般是关于场的一个四维函数（三维空间加上一维时间构成四维时空）。本书中使用$\psi(x,y,z,t)$表示场函数，有时也简写为$\psi(\bf{r},t)$。\\
+        在物理中，场可以按描述的物理量分为\textbf{标量场}和\textbf{矢量场}。标量场就是我们在中学和《高等数学》中学习过的数量函数，比如说场函数$\psi(x,y,z) = 2(xy + xz + yz)$就在三维空间中确定了一个标量场；再比如说场函数$\bf{\psi}(x,y,z) = 2xz\hatbf{x} + yz\hatbf{y} + z\hatbf{z}$就在三维空间中确定了一个矢量场。（在本书中我们采用帽标$\hat{}$表示单位矢量。）
+
+        \section{梯度、散度、旋度}
+            \subsection{梯度}
+            对于标量场$\psi$，我们定义梯度如下：
+            \begin{definition}[梯度]
+                梯度是一个矢量，标量场$\psi$在空间的某处取得最大的方向导数的方向为梯度的方向，该处的最大方向导数为梯度的大小（模）。
+            \end{definition}
+            数学家已经找到了寻找标量场梯度的方法，在这里我们不关心具体的数学过程。标量场$\psi$在某处的梯度是这样的一个矢量：它的方向是$\psi$在该方向上的偏导数。写成公式就是
+            \begin{equation}
+                \grad\psi = \frac{\partial \psi}{\partial x} \hatbf{x} + \frac{\partial \psi}{\partial y} \hatbf{y} + \frac{\partial \psi}{\partial z} \hatbf{z} \label{eq1}
+            \end{equation}
+            在这里引入算子$\nabla$，其定义如下：
+            \begin{equation}
+                \nabla = \frac{\partial}{\partial x} \hatbf{x} + \frac{\partial}{\partial y} \hatbf{y} + \frac{\partial}{\partial z} \hatbf{z} \label{eq2}
+            \end{equation}
+            如果我们把\ref{eq1}看成是$\psi$与$\displaystyle \frac{\partial}{\partial x} \hatbf{x} + \frac{\partial}{\partial y} \hatbf{y} + \frac{\partial}{\partial z} \hatbf{z}$“相乘”，那么我们可以用$\nabla$算子把梯度改写成如下形式：
+            \begin{equation}
+                \nabla\psi = \frac{\partial\psi}{\partial x} \hatbf{x} + \frac{\partial\psi}{\partial y} \hatbf{y} + \frac{\partial\psi}{\partial z} \hatbf{z} \label{eq3}
+            \end{equation}
+            这就表示了标量场的梯度。
+            \subsection{散度}
+            我们定义矢量场的散度如下：
+            \begin{definition}[散度]
+                矢量场的散度是标量场，大小是矢量场在各个方向上的偏导数之和。
+                \begin{equation*}
+                    \div \bf{\psi} = \frac{\partial \bf{\psi}}{\partial x} + \frac{\partial \bf{\psi}}{\partial y} + \frac{\partial \bf{\psi}}{\partial z} \label{eq4}
+                \end{equation*}
+            \end{definition}
+            当然我们也可以采用\textbf{通量}来定义散度。
+            \begin{definition}[通量]
+                矢量场$\bf{\psi}$通过曲面$D$的总量就是矢量场在曲面上的通量。
+                \begin{equation}
+                    J = \int_{D} \bf{\psi} \cdot \d S \label{eq5}
+                \end{equation}
+            \end{definition}
+            这里$\d S$表示单位曲面的面积。
+            使用通量可以这样定义散度。
+            \begin{definition}[散度的通量定义]
+                假设矢量场$\bf{\psi}$被闭合曲面完全包住，则我们定义矢量场对曲面的通量与曲面包裹的体积的比值的极限为矢量场的散度。
+                \begin{equation}
+                    \div \bf{\psi} = \lim_{\Delta V \to 0} \frac{ \oint_{D} \bf{\psi} \cdot \d S }{\Delta V} \label{eq6}
+                \end{equation}
+            \end{definition}
+            使用上文的$\nabla$算子可以把\ref{eq5}改写成如下形式：
+            \begin{equation}
+                \nabla \cdot \bf{\psi} = \frac{\partial \bf{\psi}}{\partial x} + \frac{\partial \bf{\psi}}{\partial y} + \frac{\partial \bf{\psi}}{\partial z} \label{eq7}
+            \end{equation}
+            可以发现，矢量场的散度场是一个标量场。
+            \subsection{旋度}
+            我们定义旋度如下：
+            \begin{definition}[旋度]
+                对于矢量场$\bf{\psi}$，我们定义旋度如下：
+                \begin{equation}
+                    \rot \bf{F} = 
+                    \begin{vmatrix}
+                        \hatbf{x} & \hatbf{y} & \hatbf{z} \\
+                        \frac{\partial}{\partial x} & \frac{\partial}{\partial y} & \frac{\partial}{\partial z} \\
+                        \psi_x & \psi_y & \psi_z
+                    \end{vmatrix}
+                    \label{eq8}
+                \end{equation}
+            \end{definition}
+            同理若定义\textbf{环量}，则可以按照环量的思路定义旋度，读者可以自己推导。\\
+            这里我们仍然使用$\nabla$算子改写表达式：
+            \begin{equation}
+                \nabla \times \bf{\psi} = 
+                \begin{vmatrix}
+                    \hatbf{x} & \hatbf{y} & \hatbf{z} \\
+                        \frac{\partial}{\partial x} & \frac{\partial}{\partial y} & \frac{\partial}{\partial z} \\
+                        \psi_x & \psi_y & \psi_z
+                \end{vmatrix}
+                \label{eq9}
+            \end{equation}
+
+        \section{$\nabla$算子的运算法则}
+        这里我们只会对一些关键的法则做出推导证明。至于那些比较简单的运算法则我们不去推导证明，只要记住就好。
+            \subsection{对标量场的运算法则}
+                \paragraph*{加法}
+                    \begin{equation}
+                        \nabla (\psi_1 + \psi_2) = \nabla \psi_1 + \nabla \psi_2 \label{eq10}
+                    \end{equation}
+                \paragraph*{数乘}
+                    \begin{equation}
+                        \nabla (\lambda\psi) = \lambda \nabla \psi \label{eq11}
+                    \end{equation}
+                \paragraph*{乘积}
+                    \begin{equation}
+                        \nabla (\lambda\psi) = \lambda \nabla \psi \label{eq11}
+                    \end{equation}
+
+\newpage
+
+    \part{静电学}
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+\end{document}
